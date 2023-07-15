@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateEscuelaDto } from './dto/create-escuela.dto';
 import { UpdateEscuelaDto } from './dto/update-escuela.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,12 +20,21 @@ async create(createEscuela: CreateEscuelaDto) {
 
 
   findAll() {
-    return `This action returns all escuela`;
-  }
+    const escuelas = this.escuelaRepository.find();
+    return escuelas;
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} escuela`;
-  }
+    async findOne(id: number) {
+      const escuela = await this.escuelaRepository.findOne({ where: { id: id } });
+      if (!escuela) {
+        throw new BadRequestException("Escuela no encontrada");
+      }
+      return escuela;
+    }
+    
+    
+
+    
 
   update(id: number, updateEscuelaDto: UpdateEscuelaDto) {
     return `This action updates a #${id} escuela`;
