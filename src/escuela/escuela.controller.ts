@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { EscuelaService } from './escuela.service';
 import { CreateEscuelaDto } from './dto/create-escuela.dto';
 import { UpdateEscuelaDto } from './dto/update-escuela.dto';
@@ -7,10 +7,11 @@ import { UpdateEscuelaDto } from './dto/update-escuela.dto';
 export class EscuelaController {
   constructor(private readonly escuelaService: EscuelaService) {}
 
-  @Post()
-  create(@Body() createEscuelaDto: CreateEscuelaDto) {
-    return this.escuelaService.create(createEscuelaDto);
-  }
+  @Post('createEscuela')
+create(@Body() createEscuela: CreateEscuelaDto) {
+  return this.escuelaService.create(createEscuela);
+}
+
 
   @Get()
   findAll() {

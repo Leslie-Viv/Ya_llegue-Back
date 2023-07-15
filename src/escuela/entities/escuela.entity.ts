@@ -22,4 +22,5 @@ export class Escuela {
     
     @Column('text')
     foto: string;
+    
 }

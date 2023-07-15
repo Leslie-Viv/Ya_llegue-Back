@@ -6,6 +6,8 @@ import { HijosModule } from './hijos/hijos.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EscuelaModule } from './escuela/escuela.module';
 import { Escuela } from './escuela/entities/escuela.entity';
+import { Hijo } from './hijos/entities/hijo.entity';
+import { Padre } from './padres/entities/padre.entity';
 
 
 @Module({
@@ -17,12 +19,12 @@ import { Escuela } from './escuela/entities/escuela.entity';
       username: 'postgres',
       password: '1234',
       database: 'ya_llegue',
-      entities:[Escuela],
+      entities:[Escuela, Hijo, Padre],
       synchronize: true,
     }),
     EscuelaModule,
-  PadresModule, HijosModule],
+    PadresModule, HijosModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,],
 })
 export class AppModule {}

@@ -1,12 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEscuelaDto } from './dto/create-escuela.dto';
 import { UpdateEscuelaDto } from './dto/update-escuela.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Escuela } from './entities/escuela.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class EscuelaService {
-  create(createEscuelaDto: CreateEscuelaDto) {
-    return 'This action adds a new escuela';
-  }
+
+constructor(
+  @InjectRepository(Escuela) private escuelaRepository: Repository <Escuela>
+){}
+
+async create(createEscuela: CreateEscuelaDto) {
+  const escuela = await this.escuelaRepository.create(createEscuela);
+  return this.escuelaRepository.save(escuela);
+}
+
+
 
   findAll() {
     return `This action returns all escuela`;
