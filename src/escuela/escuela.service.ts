@@ -3,7 +3,7 @@ import { CreateEscuelaDto } from './dto/create-escuela.dto';
 import { UpdateEscuelaDto } from './dto/update-escuela.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Escuela } from './entities/escuela.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class EscuelaService {
@@ -31,16 +31,22 @@ async create(createEscuela: CreateEscuelaDto) {
       }
       return escuela;
     }
-    
-    
-
-    
 
   update(id: number, updateEscuelaDto: UpdateEscuelaDto) {
     return `This action updates a #${id} escuela`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} escuela`;
+    this.escuelaRepository.delete(id);
+    return "La escuela a siedo removida"
   }
+
+  async search(nombre: string) {
+    const escuelas = await this.escuelaRepository.find({
+      where: { nombre: Like(`%${nombre}%`) },
+    });
+    return escuelas;
+  }
+  
+  
 }

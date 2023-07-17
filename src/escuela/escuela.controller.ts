@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { EscuelaService } from './escuela.service';
 import { CreateEscuelaDto } from './dto/create-escuela.dto';
 import { UpdateEscuelaDto } from './dto/update-escuela.dto';
@@ -32,4 +32,10 @@ create(@Body() createEscuela: CreateEscuelaDto) {
   remove(@Param('id') id: string) {
     return this.escuelaService.remove(+id);
   }
+
+  @Get('search')
+  search(@Query('nombre') nombre: string) {
+    return this.escuelaService.search(nombre);
+  }
+  
 }
