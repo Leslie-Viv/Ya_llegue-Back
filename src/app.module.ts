@@ -23,7 +23,7 @@ import { Padre } from './padres/entities/padre.entity';
       synchronize: true,
     }),
     EscuelaModule,
-    PadresModule, HijosModule],
+    PadresModule, HijosModule,],
   controllers: [AppController],
   providers: [AppService,],
 })

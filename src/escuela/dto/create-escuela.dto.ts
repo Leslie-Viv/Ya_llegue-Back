@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateEscuelaDto {
 
@@ -7,6 +7,10 @@ export class CreateEscuelaDto {
 
     @IsString()
     apellidos: string;
+
+    @IsString()
+    @IsNotEmpty()
+    password: string
 
     @IsString()
     matricula:  string;
