@@ -6,22 +6,11 @@ import { HijosModule } from './hijos/hijos.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EscuelaModule } from './escuela/escuela.module';
 import { Escuela } from './escuela/entities/escuela.entity';
+import { EncargadosModule } from './encargados/encargados.module';
 
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '1234',
-      database: 'ya_llegue',
-      entities:[Escuela],
-      synchronize: true,
-    }),
-    EscuelaModule,
-  PadresModule, HijosModule],
+  imports: [],
   controllers: [AppController],
   providers: [AppService],
 })
