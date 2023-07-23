@@ -1,8 +1,7 @@
-export class Encargado {}
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('task')
-export class Task {
+@Entity('encargado')
+export class Encargado {
     @PrimaryGeneratedColumn()
     id:number;
     @Column('text')
@@ -12,4 +11,12 @@ export class Task {
     @Column('text')
     foto:string;
 
+     //Relaciones
+    /*  @ManyToOne(()=>Padre, (p)=>p.encargado)
+    padre: Padre
+
+    @OneToMany(()=>Hijo, (h)=>h.encargado)
+    hijos: Hijo[] */
 }
+
+

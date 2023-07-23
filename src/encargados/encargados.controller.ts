@@ -7,7 +7,7 @@ import { UpdateEncargadoDto } from './dto/update-encargado.dto';
 export class EncargadosController {
   constructor(private readonly encargadosService: EncargadosService) {}
 
-  @Post()
+  @Post('nuevoEncargado')
   create(@Body() createEncargadoDto: CreateEncargadoDto) {
     return this.encargadosService.create(createEncargadoDto);
   }
@@ -22,7 +22,7 @@ export class EncargadosController {
     return this.encargadosService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(@Param('id') id: string, @Body() updateEncargadoDto: UpdateEncargadoDto) {
     return this.encargadosService.update(+id, updateEncargadoDto);
   }
