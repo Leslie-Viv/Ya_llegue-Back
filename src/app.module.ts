@@ -6,20 +6,27 @@ import { HijosModule } from './hijos/hijos.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EscuelaModule } from './escuela/escuela.module';
 import { Escuela } from './escuela/entities/escuela.entity';
+import { EncargadosModule } from './encargados/encargados.module';
+import { Hijo } from './hijos/entities/hijo.entity';
+import { Encargado } from './encargados/entities/encargado.entity';
+import { Padre } from './padres/entities/padre.entity';
 
 
 
 @Module({
-  imports: [PadresModule, HijosModule, EscuelaModule,TypeOrmModule.forFeature([Escuela]), TypeOrmModule.forRoot({
+  imports: [PadresModule, EncargadosModule, HijosModule, EscuelaModule,TypeOrmModule.forFeature([Escuela, Hijo, Encargado, Padre]), TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '1234',
+    //password: 1234 
+    //Deje la password como password por defecto porque mi pcerda 
+    //tiene configurada password en la BD y no puedo cambiarla hasta ahora
+    password: 'password',
     database: 'ya_llegue',
     autoLoadEntities: true,
     synchronize: true,
-  }),],
+  }), EncargadosModule,],
   controllers: [AppController],
   providers: [AppService],
 })

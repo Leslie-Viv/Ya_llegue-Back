@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Hijo } from "src/hijos/entities/hijo.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from "typeorm";
 
 
 
-@Entity('escuela')
+@Entity('trabajador')
 export class Escuela {
 
     @PrimaryGeneratedColumn()
@@ -22,4 +23,9 @@ export class Escuela {
     
     @Column('text')
     foto: string;
+
+    //Relacion trabajador-alumnno
+    @OneToMany(()=>Hijo, (h)=>h.trabajador)
+    hijos: Hijo[]
+    
 }
