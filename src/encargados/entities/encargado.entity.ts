@@ -16,6 +16,10 @@ export class Encargado {
 
     @Column('text')
     foto:string;
+    @Column('text',{unique:true})
+    email:string
+    @Column('text',{select:false})
+    password:string
 
      //Relaciones
     /*  @ManyToOne(()=>Padre, (p)=>p.encargado)
