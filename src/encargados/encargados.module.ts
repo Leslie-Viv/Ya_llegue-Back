@@ -6,10 +6,11 @@ import { Escuela } from 'src/escuela/entities/escuela.entity';
 import { Hijo } from 'src/hijos/entities/hijo.entity';
 import { Padre } from 'src/padres/entities/padre.entity';
 import { Encargado } from './entities/encargado.entity';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Hijo, Padre, Encargado, Escuela])
+    TypeOrmModule.forFeature([Encargado])
   ],
   controllers: [EncargadosController],
   providers: [EncargadosService]
