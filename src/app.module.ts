@@ -8,7 +8,7 @@ import { EscuelaModule } from './escuela/escuela.module';
 import { Escuela } from './escuela/entities/escuela.entity';
 import { Hijo } from './hijos/entities/hijo.entity';
 import { Padre } from './padres/entities/padre.entity';
-import { Task } from './encargados/entities/encargado.entity';
+import { Encargado } from './encargados/entities/encargado.entity';
 
 
 @Module({
@@ -20,7 +20,7 @@ import { Task } from './encargados/entities/encargado.entity';
       username: 'postgres',
       password: '1234',
       database: 'ya_llegue',
-      entities:[Escuela, Hijo, Padre, Task],
+      entities:[Escuela, Hijo, Padre, Encargado],
       synchronize: true,
     }),
     EscuelaModule,

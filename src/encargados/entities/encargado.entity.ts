@@ -1,8 +1,8 @@
-export class Encargado {}
+
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('task')
-export class Task {
+@Entity('encargado')
+export class Encargado {
     @PrimaryGeneratedColumn()
     id:number;
     @Column('text')
