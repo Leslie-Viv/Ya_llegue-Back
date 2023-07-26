@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Hijo } from "src/hijos/entities/hijo.entity";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 
 
@@ -6,13 +7,13 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 export class Escuela {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @Column('text')
-    nombre: string;
+    nombre: string
 
     @Column('text')
-    apellidos: string;
+    apellidos: string
 
     @Column('text', {select: false})
     password: string;
@@ -21,12 +22,15 @@ export class Escuela {
     estado: boolean;
 
     @Column('text')
-    matricula: string;
+    matricula: string
 
     @Column('text')
-    puesto: string;
+    puesto: string
     
     @Column('text')
-    foto: string;
-    
+    foto: string
+
+        //Relacion trabajador-alumnno
+        @OneToMany(()=>Hijo, (h)=>h.escuela)
+        hijos: Hijo[]
 }
