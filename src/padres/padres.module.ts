@@ -8,9 +8,12 @@ import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+
     TypeOrmModule.forFeature([Padre]),
     PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.register({secret:'secretWord', signOptions:{expiresIn:'1h'}})
+
+    TypeOrmModule.forFeature([ Padre])
   ],
   controllers: [PadresController],
   providers: [PadresService, PassportModule, JwtModule],

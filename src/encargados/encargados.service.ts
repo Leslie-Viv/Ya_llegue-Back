@@ -1,12 +1,14 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { CreateEncargadoDto } from './dto/create-encargado.dto';
 import { UpdateEncargadoDto } from './dto/update-encargado.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Encargado } from './entities/encargado.entity';
 import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class EncargadosService {
+  
   
   
   async create(createEncargado: CreateEncargadoDto) {
@@ -44,6 +46,5 @@ export class EncargadosService {
   }
 
   constructor(
-    @InjectRepository(Encargado) private encargadoRepository: Repository<Encargado>
-  ){}
+    @InjectRepository(Encargado) private encargadoRepository: Repository<Encargado>,){}
 }

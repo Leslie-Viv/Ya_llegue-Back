@@ -3,10 +3,12 @@ import { EncargadosService } from './encargados.service';
 import { CreateEncargadoDto } from './dto/create-encargado.dto';
 import { UpdateEncargadoDto } from './dto/update-encargado.dto';
 
+
 @Controller('encargados')
 export class EncargadosController {
   constructor(private readonly encargadosService: EncargadosService) {}
 
+  
   @Post('nuevoEncargado')
   create(@Body() createEncargadoDto: CreateEncargadoDto) {
     return this.encargadosService.create(createEncargadoDto);

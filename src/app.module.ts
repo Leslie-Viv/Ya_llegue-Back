@@ -13,7 +13,9 @@ import { Padre } from './padres/entities/padre.entity';
 
 
 @Module({
-  imports: [PadresModule, EncargadosModule, HijosModule, EscuelaModule,TypeOrmModule.forFeature([Escuela, Hijo, Encargado, Padre]), TypeOrmModule.forRoot({
+  imports: [PadresModule, EncargadosModule, HijosModule,
+     EscuelaModule,TypeOrmModule.forFeature([Escuela, Hijo, Encargado, Padre]),
+      TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
