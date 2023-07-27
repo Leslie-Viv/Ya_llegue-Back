@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreatePadreDto } from './dto/create-padre.dto';
 import { UpdatePadreDto } from './dto/update-padre.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { Padre } from './entities/padre.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { LoginPadreDTO } from './dto/login-padre.dto';
 
 @Injectable()
 export class PadresService {
@@ -17,23 +18,28 @@ export class PadresService {
 
   //Funcion de crear padre
 
-  async create(createPadre: CreatePadreDto) {
-    try {
-      const {password,...useData} = createPadre;
-      const padre = this.padreRepository.create({
-        ...useData, password: bcrypt.hashSync(password, 10)
-      });
-      await this.padreRepository.save(padre);
-      delete padre.password;
-      return {...padre}
-    }
-    catch([error]){
-      return error;
-    }
-  }
 
 
-  //
+
+  //Funcion para login de Padre
+
+  //async login(padre: LoginPadreDTO){
+   // const {password,username}= padre;
+   // const userFind = await this.padreRepository.findOne(
+     // {where:{username}, select:{
+       // password:true,
+       // username:true,
+       // nombre:true,
+        //apellidos:true}}
+//    );
+//    if(!userFind){ throw new UnauthorizedException
+//      ('Credenciales no validas');}
+//    if(!bcrypt.compareSync(password, userFind.password)){
+//      throw new UnauthorizedException('Credenciales no validas');
+//    }
+//    delete userFind.password
+//    return {padre}
+//  }
 
   findAll() {
     return `This action returns all padres`;

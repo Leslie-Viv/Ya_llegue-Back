@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MinLength, isNotEmpty } from "class-validator";
+import { IsNotEmpty, IsString, MinLength } from "class-validator";
 
 export class CreatePadreDto {
 
@@ -11,14 +11,16 @@ export class CreatePadreDto {
     @IsNotEmpty()
     apellidos: string
 
+    @IsNotEmpty()
     @IsString()
     foto: string
 
+    @IsNotEmpty()
     @IsString()
     username: string
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     password: string
 
 
