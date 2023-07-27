@@ -16,6 +16,14 @@ export class Padre {
 
     @Column('text')
     foto: string
+
+    @Column('text', {unique: true})
+    username: string
+
+    @Column('text')
+    password: string
+
+    
 //Relaciones
 //Relacion padre-hijo
     @OneToMany(()=>Hijo, (h)=>h.padre)

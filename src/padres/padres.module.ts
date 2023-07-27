@@ -2,16 +2,18 @@ import { Module } from '@nestjs/common';
 import { PadresService } from './padres.service';
 import { PadresController } from './padres.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Encargado } from 'src/encargados/entities/encargado.entity';
-import { Escuela } from 'src/escuela/entities/escuela.entity';
-import { Hijo } from 'src/hijos/entities/hijo.entity';
 import { Padre } from './entities/padre.entity';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Hijo, Padre, Encargado, Escuela])
+    TypeOrmModule.forFeature([Padre]),
+    PassportModule.register({defaultStrategy:'jwt'}),
+    JwtModule.register({secret:'secretWord', signOptions:{expiresIn:'1h'}})
   ],
   controllers: [PadresController],
-  providers: [PadresService]
+  providers: [PadresService, PassportModule, JwtModule],
+  exports: [PassportModule, JwtModule]
 })
 export class PadresModule {}

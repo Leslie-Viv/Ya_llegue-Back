@@ -1,15 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PadresService } from './padres.service';
 import { CreatePadreDto } from './dto/create-padre.dto';
 import { UpdatePadreDto } from './dto/update-padre.dto';
 
 @Controller('padres')
+@UsePipes(new ValidationPipe())
 export class PadresController {
   constructor(private readonly padresService: PadresService) {}
 
-  @Post()
-  create(@Body() createPadreDto: CreatePadreDto) {
-    return this.padresService.create(createPadreDto);
+  @Post('registrarPadre')
+  create(@Body() createPadre: CreatePadreDto) {
+    return this.padresService.create(createPadre);
   }
 
   @Get()
