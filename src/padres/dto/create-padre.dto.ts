@@ -1,1 +1,27 @@
-export class CreatePadreDto {}
+import { IsNotEmpty, IsString, MinLength } from "class-validator";
+
+export class CreatePadreDto {
+
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(3)
+    nombre: string
+
+    @IsString()
+    @IsNotEmpty()
+    apellidos: string
+
+    @IsNotEmpty()
+    @IsString()
+    foto: string
+
+    @IsNotEmpty()
+    @IsString()
+    username: string
+
+    @IsNotEmpty()
+    @IsString()
+    password: string
+
+
+}
