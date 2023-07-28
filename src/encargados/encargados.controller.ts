@@ -2,17 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EncargadosService } from './encargados.service';
 import { CreateEncargadoDto } from './dto/create-encargado.dto';
 import { UpdateEncargadoDto } from './dto/update-encargado.dto';
-import { loginDto } from './dto/login.dto';
+
 
 @Controller('encargados')
 export class EncargadosController {
   constructor(private readonly encargadosService: EncargadosService) {}
 
-  @Post('loginEncargado')
-  login(@Body() encargado:loginDto){
-    return this.encargadosService.login(encargado);
-  }
-
+  
   @Post('nuevoEncargado')
   create(@Body() createEncargadoDto: CreateEncargadoDto) {
     return this.encargadosService.create(createEncargadoDto);
