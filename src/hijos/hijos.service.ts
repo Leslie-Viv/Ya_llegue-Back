@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateHijoDto } from './dto/create-hijo.dto';
 import { UpdateHijoDto } from './dto/update-hijo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Encargado } from 'src/encargados/entities/encargado.entity';
-import { Escuela } from 'src/escuela/entities/escuela.entity';
 import { Padre } from 'src/padres/entities/padre.entity';
 import { Hijo } from './entities/hijo.entity';
 import { Repository } from 'typeorm';
@@ -12,10 +10,8 @@ import { Repository } from 'typeorm';
 export class HijosService {
 
   constructor(
-    @InjectRepository(Hijo) private hijoRepository: Repository<Hijo>,
     @InjectRepository(Padre) private padreRepository: Repository<Padre>,
-    @InjectRepository(Escuela) private escuelaRepository: Repository<Escuela>,
-    @InjectRepository(Encargado) private encargadoRepository: Repository<Encargado>
+    @InjectRepository(Hijo) private hijoRepository: Repository<Hijo>
   ){}
 
   //Función para crear Hijo

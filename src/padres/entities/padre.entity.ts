@@ -25,7 +25,7 @@ export class Padre {
 
     
 //Relaciones
-//Relacion padre-hijo
+//Relacion padre-hijo   
     @OneToMany(()=>Hijo, (h)=>h.padre)
     hijos: Hijo[]
     //relacion padre-encargado
