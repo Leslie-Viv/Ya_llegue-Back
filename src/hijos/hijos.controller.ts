@@ -7,9 +7,9 @@ import { UpdateHijoDto } from './dto/update-hijo.dto';
 export class HijosController {
   constructor(private readonly hijosService: HijosService) {}
 
-  @Post()
-  create(@Body() createHijoDto: CreateHijoDto) {
-    return this.hijosService.create(createHijoDto);
+  @Post('registrarHijo')
+  create(@Body() createHijo: CreateHijoDto) {
+    return this.hijosService.create(createHijo);
   }
 
   @Get()

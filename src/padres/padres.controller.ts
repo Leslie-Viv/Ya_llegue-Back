@@ -9,14 +9,14 @@ import { LoginPadreDTO } from './dto/login-padre.dto';
 export class PadresController {
   constructor(private readonly padresService: PadresService) {}
 
- // @Post('registrarPadre')
- // create(@Body() createPadre: CreatePadreDto) {
- ///   return this.padresService.create(createPadre);
- // }
+ @Post('registrarPadre')
+ create(@Body() createPadre: CreatePadreDto) {
+ return this.padresService.create(createPadre);
+ }
 
- // @Post('login')
- // login(@Body() padre: LoginPadreDTO){
- //   return this.padresService.login(padre);}
+ @Post('login')
+ login(@Body() padre: LoginPadreDTO){
+ return this.padresService.login(padre);}
 
   @Get(':id')
   findOne(@Param('id') id: string) {
