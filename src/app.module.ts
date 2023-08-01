@@ -20,10 +20,10 @@ import { Padre } from './padres/entities/padre.entity';
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    //password: '1234', 
+    password: '1234', 
     //Deje mi password comentada porque mi pcerda 
     //tiene configurada password en la BD y no puedo cambiarla hasta ahora
-    password: 'password',
+    //password: 'password',
     database: 'ya_llegue',
     autoLoadEntities: true,
     synchronize: true,
