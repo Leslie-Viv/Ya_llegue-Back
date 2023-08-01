@@ -4,7 +4,6 @@ import { UpdateEncargadoDto } from './dto/update-encargado.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Encargado } from './entities/encargado.entity';
 import { Repository } from 'typeorm';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class EncargadosService {
