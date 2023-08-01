@@ -5,13 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Padre } from './entities/padre.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { Hijo } from 'src/hijos/entities/hijo.entity';
 
 @Module({
   imports: [
 
-    TypeOrmModule.forFeature([Padre]),
+    TypeOrmModule.forFeature([Padre, Hijo]),
     PassportModule.register({defaultStrategy:'jwt'}),
-    JwtModule.register({secret:'secretWord', signOptions:{expiresIn:'1h'}}),
+    JwtModule.register({secret:'secretWord', signOptions:{expiresIn:'1h'}})
 
     TypeOrmModule.forFeature([ Padre])
   ],

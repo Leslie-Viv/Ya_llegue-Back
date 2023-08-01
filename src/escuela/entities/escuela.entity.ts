@@ -15,6 +15,12 @@ export class Escuela {
     @Column('text')
     apellidos: string
 
+    @Column('text', {select: false})
+    password: string;
+
+    @Column('bool',{default:true})
+    estado: boolean;
+
     @Column('text')
     matricula: string
 

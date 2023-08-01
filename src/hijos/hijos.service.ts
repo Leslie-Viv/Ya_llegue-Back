@@ -1,5 +1,3 @@
-import { Encargado } from 'src/encargados/entities/encargado.entity';
-import { Escuela } from 'src/escuela/entities/escuela.entity';
 import { Injectable } from '@nestjs/common';
 import { CreateHijoDto } from './dto/create-hijo.dto';
 import { UpdateHijoDto } from './dto/update-hijo.dto';
@@ -29,19 +27,36 @@ export class HijosService {
     return hijo;
   }
 
+  //Funcion para encontrar todos los alumnos
   findAll() {
-    return `This action returns all hijos`;
+   const hijos = this.hijoRepository.find();
+   return hijos;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} hijo`;
+  //Funcion para encontrar alumno por ID
+  async findOne(id: number) {
+    const hijo = await this.hijoRepository.findOne({
+      where:{id}
+    })
+    if(!hijo){
+      throw new BadRequestException("Alumnoo no encontrado");
+    }
+    return hijo;
   }
 
-  update(id: number, updateHijoDto: UpdateHijoDto) {
-    return `This action updates a #${id} hijo`;
+  //Funcion para actualizar hijo/alumno
+  async update(id: number, updateHijo: UpdateHijoDto) {
+    await this.hijoRepository.update(id, updateHijo);
+    const hijo = await this.hijoRepository.findOne({where:{id}});
+    if(!hijo){
+      throw new BadRequestException("Alumno no encontrado");
+    }
+    return hijo
   }
 
+
+  //Funcion para eliminar alumnos por ID
   remove(id: number) {
-    return `This action removes a #${id} hijo`;
+    this.hijoRepository.delete(id);
   }
 }
