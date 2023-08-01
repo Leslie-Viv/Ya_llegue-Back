@@ -23,7 +23,7 @@ import { Padre } from './padres/entities/padre.entity';
     //password: '1234', 
     //Deje mi password comentada porque mi pcerda 
     //tiene configurada password en la BD y no puedo cambiarla hasta ahora
-    password: 'password',
+    password: '1234',
     database: 'ya_llegue',
     autoLoadEntities: true,
     synchronize: true,
