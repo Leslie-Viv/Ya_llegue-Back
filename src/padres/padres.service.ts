@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreatePadreDto } from './dto/create-padre.dto';
 import { UpdatePadreDto } from './dto/update-padre.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -56,12 +56,21 @@ async login(padre: LoginPadreDTO){
     return {padre}
   }
 
-  findAll() {
-    return `This action returns all padres`;
+  //Funcion para encontrar padre por ID
+
+  async findOne(id: number) {
+    const task = await this.padreRepository.findOne({where: {id}});
+    if (!task){
+      //return {msn: 'No encontrado'}
+      throw new BadRequestException("Padre no encontrado");
+    }
+    return task;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} padre`;
+  //Funcion para encontrar todos los padres
+  findAll(){
+    const padres = this.padreRepository.find();
+    return padres;
   }
 
   update(id: number, updatePadreDto: UpdatePadreDto) {
@@ -71,4 +80,6 @@ async login(padre: LoginPadreDTO){
   remove(id: number) {
     return `This action removes a #${id} padre`;
   }
+
+
 }
