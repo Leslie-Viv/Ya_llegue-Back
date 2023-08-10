@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreatePadreDto } from './dto/create-padre.dto';
 import { UpdatePadreDto } from './dto/update-padre.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -74,13 +74,11 @@ validaToken(token: any) {
   }
 }
 
-  async findAll() {
-    const padres = await this.padreRepository.find();
-    return padres;
-  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} padre`;
+  //Funcion para encontrar todos los padres
+  findAll(){
+    const padres = this.padreRepository.find();
+    return padres;
   }
 
   update(id: number, updatePadreDto: UpdatePadreDto) {
@@ -90,4 +88,6 @@ validaToken(token: any) {
   remove(id: number) {
     return `This action removes a #${id} padre`;
   }
+
+
 }

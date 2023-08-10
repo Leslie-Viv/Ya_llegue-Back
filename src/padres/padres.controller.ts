@@ -18,15 +18,16 @@ export class PadresController {
  login(@Body() padre: LoginPadreDTO){
  return this.padresService.login(padre);}
 
- @Get()
- findAll(){
-  return this.padresService.findAll();
- }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.padresService.findOne(+id);
-  }
+@Get()
+findAll(){
+  return this.padresService.findAll();
+}
+
+ @Get(':id')
+ findOne(@Param('id') id: string) {
+   return this.padresService.findOne(+id);
+ }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePadreDto: UpdatePadreDto) {
