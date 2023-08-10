@@ -26,7 +26,7 @@ export class EncargadosService {
       where:{id}
     })
     if(!encargado){
-      throw new BadRequestException("Encagado no encontrado");
+      throw new BadRequestException("Encargado no encontrado");
     }
     return encargado
   }
@@ -35,7 +35,7 @@ export class EncargadosService {
     await this.encargadoRepository.update(id, updateEncargado);
     const encargado= await this.encargadoRepository.findOne({where:{id}});
     if(!encargado){
-      throw new BadRequestException("Encagado no encontrado");
+      throw new BadRequestException("Encargado no encontrado");
     }
     return encargado
   }

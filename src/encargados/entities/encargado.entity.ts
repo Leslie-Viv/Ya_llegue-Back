@@ -14,12 +14,12 @@ export class Encargado {
     @Column('text')
     apellidos:string;
 
+    @Column('number')
+    numerotel:number;
+
     @Column('text')
     foto:string;
-    @Column('text',{unique:true})
-    email:string
-    @Column('text',{select:false})
-    password:string
+    
 
      //Relaciones
     /*  @ManyToOne(()=>Padre, (p)=>p.encargado)
