@@ -18,6 +18,11 @@ export class PadresController {
  login(@Body() padre: LoginPadreDTO){
  return this.padresService.login(padre);}
 
+ @Get()
+ findAll(){
+  return this.padresService.findAll();
+ }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.padresService.findOne(+id);
