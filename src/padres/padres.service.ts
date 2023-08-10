@@ -12,7 +12,7 @@ import { LoginPadreDTO } from './dto/login-padre.dto';
 export class PadresService {
 
   constructor(
-    private jwtS:JwtService,
+    private jwtService:JwtService,
     @InjectRepository(Padre) private padreRepository: Repository<Padre>
   ){}
 
@@ -47,25 +47,33 @@ async login(padre: LoginPadreDTO){
        nombre:true,
         apellidos:true}}
 );
-    if(!userFind){ throw new UnauthorizedException
-      ('Credenciales no validas');}
-    if(!bcrypt.compareSync(password, userFind.password)){
-      throw new UnauthorizedException('Credenciales no validas');
-    }
-    delete userFind.password
-    return {padre}
-  }
+if (!userFind || !(await bcrypt.compare(password, userFind.password))) {
+  // Simplificar la comprobación de autenticación
+  throw new UnauthorizedException('Credenciales no válidas');
+}
+delete userFind.password;
+const token = this.getJWToken({
+  id: userFind.id,
+  nombre: userFind.nombre,
+  apellidos: userFind.apellidos,
+});
+return { ...userFind, token };
+}
 
-  //Funcion para encontrar padre por ID
+private getJWToken(payload: { id: number; nombre: string; apellidos: string }) {
+  const token = this.jwtService.sign(payload);
+  return token;
+}
 
-  async findOne(id: number) {
-    const task = await this.padreRepository.findOne({where: {id}});
-    if (!task){
-      //return {msn: 'No encontrado'}
-      throw new BadRequestException("Padre no encontrado");
-    }
-    return task;
+validaToken(token: any) {
+  try {
+    this.jwtService.verify(token.token); // No es necesario proporcionar el 'secret', ya que se configuró al inicializar JwtModule
+    return true;
+  } catch (error) {
+    throw new UnauthorizedException('Token no válido');
   }
+}
+
 
   //Funcion para encontrar todos los padres
   findAll(){

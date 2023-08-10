@@ -21,10 +21,10 @@ login(@Body() escuela: LoginDto){
   findAll() {
     return this.escuelaService.findAll();
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.escuelaService.findOne(+id);
+  
+  @Get(':matricula')
+  findOne(@Param('matricula') matricula: string) {
+    return this.escuelaService.findByMatricula(matricula);
   }
 
   @Patch(':id')

@@ -18,6 +18,7 @@ export class PadresController {
  login(@Body() padre: LoginPadreDTO){
  return this.padresService.login(padre);}
 
+
 @Get()
 findAll(){
   return this.padresService.findAll();

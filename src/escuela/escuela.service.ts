@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateEscuelaDto } from './dto/create-escuela.dto';
 import { UpdateEscuelaDto } from './dto/update-escuela.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -85,6 +85,21 @@ export class EscuelaService {
     return escuela;
   }
 
+  async findByMatricula(matricula: string) {
+    try {
+      const user = await this.escuelaRepository.findOne({
+        where: { matricula },
+        select: ['nombre', 'apellidos', 'estado', 'matricula', 'puesto', 'foto'],
+      });
+      if (!user) {
+        throw new NotFoundException('Usuario no encontrado');
+      }
+      return user;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener la información del usuario');
+    }
+  }
+
   update(id: number, updateEscuelaDto: UpdateEscuelaDto) {
     // Implementar la lógica para actualizar una escuela según el ID proporcionado
   }
@@ -100,4 +115,7 @@ export class EscuelaService {
     });
     return escuelas;
   }
+
+
+  
 }
