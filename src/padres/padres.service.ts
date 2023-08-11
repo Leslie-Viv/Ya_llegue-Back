@@ -17,23 +17,45 @@ export class PadresService {
   ){}
 
   //Funcion de crear padre
-  async create(createPadre: CreatePadreDto) {
-    try {
-      const{password,...useData}=createPadre;
-      const padre = this.padreRepository.create({
-        ...useData, password: bcrypt.hashSync(password, 10)
-      });
-      await this.padreRepository.save(padre);
-      delete padre.password;
-      return{...padre}
-    } catch ([error]) {
-      return error;
-    }
-  //const padre = this.padreRepository.create(createPadre);
-  //await this.padreRepository.save(padre);
-  //return padre;
+//   async create(createPadre: CreatePadreDto) {
+//     try {
+//       const{password,...useData}=createPadre;
+//       const padre = this.padreRepository.create({
+//         ...useData, password: bcrypt.hashSync(password, 10)
+//       });
+//       await this.padreRepository.save(padre);
+//       delete padre.password;
+//       return{...padre}
+//     } catch ([error]) {
+//       return error;
+//     }
+//   //const padre = this.padreRepository.create(createPadre);
+//   //await this.padreRepository.save(padre);
+//   //return padre;
+// }
+
+
+//Nueva funcion para registrar al padre
+async registrarPadre(data: CreatePadreDto): Promise<Padre> {
+  const padre = new Padre();
+  padre.nombre = data.nombre;
+  padre.apellidos = data.apellidos;
+  padre.username = data.username;
+  padre.password = data.password;
+  padre.foto = data.foto; // Asignar la ruta de la foto con el nombre de archivo construido
+  return await this.padreRepository.save(padre);
 }
 
+// Método para obtener el último ID de padre
+async obtenerUltimoId(): Promise<number> {
+  const ultimoPadre = await this.padreRepository
+    .createQueryBuilder('padre')
+    .select('padre.id', 'id')
+    .orderBy('padre.id', 'DESC')
+    .getRawOne();
+
+  return ultimoPadre ? ultimoPadre.id : 0;
+}
 
 
   //Funcion para login de Padre
@@ -74,6 +96,16 @@ validaToken(token: any) {
   }
 }
 
+
+  //Funcion para encontrar padre por ID
+  async findOne(id: number) {
+    const padre = await this.padreRepository.findOne({where: {id}});
+    if (!padre){
+      //return {msn: 'No encontrado'}
+      throw new BadRequestException("Padre no encontrado");
+    }
+    return padre;
+  }
 
   //Funcion para encontrar todos los padres
   findAll(){
