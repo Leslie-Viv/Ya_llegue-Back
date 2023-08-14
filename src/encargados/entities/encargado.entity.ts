@@ -14,7 +14,7 @@ export class Encargado {
     @Column('text')
     apellidos:string;
 
-    @Column('number')
+    @Column('integer')
     numerotel:number;
 
     @Column('text')

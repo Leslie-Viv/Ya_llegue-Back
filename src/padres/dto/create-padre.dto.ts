@@ -11,8 +11,7 @@ export class CreatePadreDto {
     @IsNotEmpty()
     apellidos: string
 
-    @IsNotEmpty()
-    @IsString()
+
     foto: string
 
     @IsNotEmpty()
