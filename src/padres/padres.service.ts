@@ -81,6 +81,8 @@ validaToken(token: any) {
     return padres;
   }
 
+  findOne(id: number){}
+
   update(id: number, updatePadreDto: UpdatePadreDto) {
     return `This action updates a #${id} padre`;
   }
