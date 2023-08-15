@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, UploadedFile, UseInterceptors, UnauthorizedException, HttpCode } from '@nestjs/common';
 import { PadresService } from './padres.service';
 import { CreatePadreDto } from './dto/create-padre.dto';
 import { UpdatePadreDto } from './dto/update-padre.dto';
@@ -39,9 +39,10 @@ export class PadresController {
     return { message: 'Padre registrado exitosamente', padre };
   }
 
- @Post('login')
- login(@Body() padre: LoginPadreDTO){
- return this.padresService.login(padre);}
+  @Post('login')
+ login(@Body() loginPadreDto: LoginPadreDTO) {
+    return  this.padresService.login(loginPadreDto);
+  }
 
 
 @Get()
@@ -62,5 +63,11 @@ findAll(){
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.padresService.remove(+id);
+  }
+
+  @Get(':id/hijos')
+  async getHijosRelacionados(@Param('id') id: number) {
+    const hijos = await this.padresService.getHijosByPadreId(id);
+    return hijos;
   }
 }

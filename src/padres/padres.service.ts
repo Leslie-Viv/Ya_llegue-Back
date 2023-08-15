@@ -7,13 +7,15 @@ import { Padre } from './entities/padre.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginPadreDTO } from './dto/login-padre.dto';
+import { Hijo } from 'src/hijos/entities/hijo.entity';
 
 @Injectable()
 export class PadresService {
 
   constructor(
-    private jwtService:JwtService,
-    @InjectRepository(Padre) private padreRepository: Repository<Padre>
+    private readonly jwtService:JwtService,
+    @InjectRepository(Padre) private readonly padreRepository: Repository<Padre>,
+    @InjectRepository(Hijo)private readonly hijoRepository: Repository<Hijo>
   ){}
 
   //Funcion de crear padre
@@ -37,14 +39,21 @@ export class PadresService {
 
 //Nueva funcion para registrar al padre
 async registrarPadre(data: CreatePadreDto): Promise<Padre> {
-  const padre = new Padre();
-  padre.nombre = data.nombre;
-  padre.apellidos = data.apellidos;
-  padre.username = data.username;
-  padre.password = data.password;
-  padre.foto = data.foto; // Asignar la ruta de la foto con el nombre de archivo construido
-  return await this.padreRepository.save(padre);
+  try {
+    const { password, ...userData } = data;
+    const padre = this.padreRepository.create({
+      ...userData,
+      password: await bcrypt.hash(password, 10),
+      foto: data.foto, // Asignar la ruta de la foto con el nombre de archivo construido
+    });
+    await this.padreRepository.save(padre);
+    delete padre.password;
+    return { ...padre };
+  } catch (error) {
+    throw new BadRequestException(error.message);
+  }
 }
+
 
 // Método para obtener el último ID de padre
 async obtenerUltimoId(): Promise<number> {
@@ -60,42 +69,47 @@ async obtenerUltimoId(): Promise<number> {
 
   //Funcion para login de Padre
 
-async login(padre: LoginPadreDTO){
-  const {password,username}= padre;
-  const userFind = await this.padreRepository.findOne(
-  {where:{username}, select:{
-       password:true,
-       username:true,
-       nombre:true,
-        apellidos:true}}
-);
-if (!userFind || !(await bcrypt.compare(password, userFind.password))) {
-  // Simplificar la comprobación de autenticación
-  throw new UnauthorizedException('Credenciales no válidas');
-}
-delete userFind.password;
-const token = this.getJWToken({
-  id: userFind.id,
-  nombre: userFind.nombre,
-  apellidos: userFind.apellidos,
-});
-return { ...userFind, token };
-}
+  async login(loginPadreDto: LoginPadreDTO) {
+    const { password, username } = loginPadreDto;
+    const userFind = await this.padreRepository.findOne({
+      where: { username },
+      select: {
+        username: true,
+        nombre: true,
+        apellidos: true,
+        foto: true,
+        password: true,
+      },
+    });
 
-private getJWToken(payload: { id: number; nombre: string; apellidos: string }) {
-  const token = this.jwtService.sign(payload);
-  return token;
-}
+    if (!userFind || !(await bcrypt.compare(password, userFind.password))) {
+      throw new UnauthorizedException('Usuario o contraseña incorrectos');
+    }
 
-validaToken(token: any) {
-  try {
-    this.jwtService.verify(token.token); // No es necesario proporcionar el 'secret', ya que se configuró al inicializar JwtModule
-    return true;
-  } catch (error) {
-    throw new UnauthorizedException('Token no válido');
+    const { password: _, ...userWithoutPassword } = userFind;
+
+    const token = this.getJWToken({
+      id: userFind.id,
+      nombre: userFind.nombre,
+      apellidos: userFind.apellidos,
+    });
+
+    return { ...userWithoutPassword, token };
   }
-}
 
+  private getJWToken(payload: { id: number; nombre: string; apellidos: string }) {
+    const token = this.jwtService.sign(payload);
+    return token;
+  }
+
+  validaToken(token: any): boolean {
+    try {
+      this.jwtService.verify(token.token);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 
   //Funcion para encontrar padre por ID
   async findOne(id: number) {
@@ -113,12 +127,17 @@ validaToken(token: any) {
     return padres;
   }
 
+
   update(id: number, updatePadreDto: UpdatePadreDto) {
     return `This action updates a #${id} padre`;
   }
 
   remove(id: number) {
     return `This action removes a #${id} padre`;
+  }
+
+  async getHijosByPadreId(padreId: number): Promise<Hijo[]> {
+    return this.hijoRepository.find({ where: { padre: { id: padreId } } });
   }
 
 
