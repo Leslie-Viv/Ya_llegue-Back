@@ -64,4 +64,10 @@ findAll(){
   remove(@Param('id') id: string) {
     return this.padresService.remove(+id);
   }
+
+  @Get(':id/hijos')
+  async getHijosRelacionados(@Param('id') id: number) {
+    const hijos = await this.padresService.getHijosByPadreId(id);
+    return hijos;
+  }
 }
