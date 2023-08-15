@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginPadreDTO } from './dto/login-padre.dto';
 import { Hijo } from 'src/hijos/entities/hijo.entity';
+import { Encargado } from 'src/encargados/entities/encargado.entity';
 
 @Injectable()
 export class PadresService {
@@ -15,7 +16,8 @@ export class PadresService {
   constructor(
     private readonly jwtService:JwtService,
     @InjectRepository(Padre) private readonly padreRepository: Repository<Padre>,
-    @InjectRepository(Hijo)private readonly hijoRepository: Repository<Hijo>
+    @InjectRepository(Hijo)private readonly hijoRepository: Repository<Hijo>,
+    @InjectRepository(Encargado) private readonly encargadoRepository: Repository<Encargado>
   ){}
 
   //Funcion de crear padre
@@ -138,6 +140,10 @@ async obtenerUltimoId(): Promise<number> {
 
   async getHijosByPadreId(padreId: number): Promise<Hijo[]> {
     return this.hijoRepository.find({ where: { padre: { id: padreId } } });
+  }
+
+  async getEncargadosByPadreId(padreId: number): Promise<Encargado[]> {
+    return this.encargadoRepository.find({ where: { padre: { id: padreId } } });
   }
 
 
