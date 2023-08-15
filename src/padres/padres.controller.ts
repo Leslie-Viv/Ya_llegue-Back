@@ -70,4 +70,9 @@ findAll(){
     const hijos = await this.padresService.getHijosByPadreId(id);
     return hijos;
   }
+  @Get(':id/encargados')
+  async getEncargadosRelacionados(@Param('id') id: number) {
+    const encargados = await this.padresService.getEncargadosByPadreId(id);
+    return encargados;
+  }
 }
