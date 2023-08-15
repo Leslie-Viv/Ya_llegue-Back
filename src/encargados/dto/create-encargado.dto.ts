@@ -1,13 +1,12 @@
 import { IsString } from "class-validator";
-export class CreateEncargadoDto {}
 
 
-export class CreateTaskDto {
+export class CreateEncargadoDto {
     @IsString()
     nombre: string
     @IsString()
     apellidos:string
-    @IsString()
+    
     foto:string
     
 }

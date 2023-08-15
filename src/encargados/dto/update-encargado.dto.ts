@@ -8,6 +8,6 @@ export class UpdateEncargadoDto extends PartialType(CreateEncargadoDto) {
     nombre: string
     @IsString()
     apellidos:string
-    @IsString()
+
     foto:string
 }

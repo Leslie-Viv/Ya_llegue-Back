@@ -25,7 +25,7 @@ export class HijosController {
     return this.hijosService.findOne(+id);
   }
 //Metodo para actualizar alumno/hijo
-  @Patch('update/:id')
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updateHijo: UpdateHijoDto) {
     return this.hijosService.update(+id, updateHijo);
   }
